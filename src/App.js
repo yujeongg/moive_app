@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Movie from './Movie';
 
 class App extends React.Component{
   state={
@@ -8,7 +9,10 @@ class App extends React.Component{
   };
 
 getMovies = async () => { // 오래 걸릴거야, 뭐가?
-  const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json"); // axios를 기다려
+  const {data : {data : {movies}}} = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=rating"); // axios를 기다려 + api에서 sort by rating을 확인한 후, sort_by=rating 추가
+
+  console.log({movies});
+  this.setState({ movies , isLoading:false})
 }
 
   componentDidMount(){
@@ -16,10 +20,14 @@ getMovies = async () => { // 오래 걸릴거야, 뭐가?
     }
 
   render () {
-    const {isLoading} = this.state;
+    const {isLoading, movies} = this.state;
     return (
     <div>
-      {isLoading ? "Loading..." : "We are ready"}
+      {isLoading ? "Loading..." : movies.map(movie => {
+        console.log(moive);
+        return <Movie id={moive.id} year={moive.year} title={moive.title} summary={moive.summary} poster={moive.medium_cover_image}/>
+        
+      })}
     </div>
     );
   }
