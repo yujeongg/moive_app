@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 // doen't need state
 
-function Movie ({id, year, title, summary, poster}){
+function Movie({id, year, title, summary, poster}){
     return <h5>{title}</h5>
 
 }
 
-Movie.PropTypes = {
+Movie.propTypes = {
     id: PropTypes.number.isRequired,
     year : PropTypes.number,
     title: PropTypes.string.isRequired,
